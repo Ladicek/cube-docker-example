@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+  <extension qualifier="docker">
+    <!--<property name="autoStartContainers">[keycloak]</property>-->
+    <property name="definitionFormat">CUBE</property>
+    <property name="dockerContainers">
+      keycloak:
+        image: jboss/keycloak:2.5.5.Final
+        portBindings:
+        - 8180->8080/tcp
+        env:
+        - KEYCLOAK_USER=admin
+        - KEYCLOAK_PASSWORD=admin
+        await:
+          strategy: log
+          match: "WFLYSRV0025: Keycloak"
+          timeout: 600
+    </property>
+  </extension>
+
+</arquillian>
+
